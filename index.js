@@ -8,7 +8,7 @@ const { addUser, removeUser, getUser, getUsersInRoom } = require('./users');
 const router = require('./router');
 const corsOptions={
     cors: true,
-    origins:["https://chatroomappp.herokuapp.com"],
+    origins:['https://chatroomappp.herokuapp.com'],
    }
 const app = express();
 const server = http.createServer(app);
