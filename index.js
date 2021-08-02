@@ -6,13 +6,9 @@ const PORT = process.env.PORT || 5000
 const { addUser, removeUser, getUser, getUsersInRoom } = require('./users');
 
 const router = require('./router');
-const corsOptions={
-    cors: true,
-    origins:["https://funroom.netlify.app"],
-   }
 const app = express();
 const server = http.createServer(app);
-const io = socketio(server,corsOptions);
+const io = socketio(server);
 
 app.use(cors());
 app.use(router);
