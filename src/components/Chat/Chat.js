@@ -9,7 +9,7 @@ import Input from '../Input/Input';
 
 import './chat.css';
 
-const ENDPOINT = 'https://chataappp.herokuapp.com/';
+const ENDPOINT = 'https://chataappp.herokuapp.com';
 
 let socket;
 
@@ -33,12 +33,12 @@ const Chat = ({ location }) => {
       }
     });
   }, [location.search]);
-  
+
   useEffect(() => {
     socket.on('message', message => {
       setMessages(messages => [ ...messages, message ]);
     });
-    
+
     socket.on("roomData", ({ users }) => {
       setUsers(users);
     });
