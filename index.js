@@ -6,9 +6,13 @@ const PORT = process.env.PORT || 5000
 const { addUser, removeUser, getUser, getUsersInRoom } = require('./users');
 
 const router = require('./router');
+const corsOptions={
+    cors: true,
+    origins:["*"],
+   }
 const app = express();
 const server = http.createServer(app);
-const io = socketio(server);
+const io = socketio(server,corsOptions);
 
 app.use(cors());
 app.use(router);
@@ -19,7 +23,7 @@ io.on('connect', (socket) => {
     if(error) return callback(error);
 
     socket.join(user.room);
-
+    console.log(user.name,"Joined",user.room);
     socket.emit('message', { user: 'admin', text: `${user.name}, welcome to room ${user.room}.`});
     socket.broadcast.to(user.room).emit('message', { user: 'admin', text: `${user.name} has joined!` });
 
@@ -41,6 +45,7 @@ io.on('connect', (socket) => {
     if(user) {
       io.to(user.room).emit('message', { user: 'Admin', text: `${user.name} has left.` });
       io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room)});
+      console.log(user.name, "left", user.room);
     }
   })
 });
